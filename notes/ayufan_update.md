@@ -2,7 +2,8 @@
 
 ## Script
 
-    VERSION="$2"
+    REPO="ayufan-pine64/linux-build"
+    VERSION="$1"
 
     if [[ -z "$VERSION" ]]; then
         VERSION=$(curl -f -sS https://api.github.com/repos/$REPO/releases/latest | jq -r ".tag_name")
@@ -15,7 +16,7 @@
         echo "Using latest release: $VERSION from https://github.com/$REPO/releases."
     fi
 
-	sudo /usr/local/sbin/pine64_update_kernel.sh $VERSION
-	sudo /usr/local/sbin/pine64_update_uboot.sh $VERSION
-	sudo /usr/local/sbin/pine64_update_package.sh $VERSION
+    sudo /usr/local/sbin/pine64_update_kernel.sh $VERSION
+    sudo /usr/local/sbin/pine64_update_uboot.sh $VERSION
+    sudo /usr/local/sbin/pine64_update_package.sh $VERSION
 
