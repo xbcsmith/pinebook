@@ -15,13 +15,19 @@ Using something debian based like bionic
 
     sudo update-alternatives --config editor
 
-### Install go
+## Install go and rust
 
-    sudo add-apt-repository ppa:gophers/archive
-    sudo apt-get install golang-1.10-go
+### golang 1-12
 
+    sudo add-apt-repository ppa:longsleep/golang-backports
+    sudo apt-get update
+    sudo apt-get install golang-go
 
-# Install Docker
+### rust
+
+    sudo apt-get install rustc cargo dh-cargo
+
+## Install Docker
 
     sudo apt-get remove docker docker-engine docker.io
     sudo apt-get install apt-transport-https ca-certificates curl software-properties-common
@@ -30,7 +36,17 @@ Using something debian based like bionic
     sudo add-apt-repository "deb [arch=arm64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) edge"
     sudo apt-get install docker-ce
     # Expose port to world... seems safe
-    sudo sed -i 's~-H fd://~-H fd:// -H tcp://0.0.0.0:2375~g' /lib/systemd/system/docker.service
+    mkdir /etc/docker
+    cat > /etc/docker/daemon.json << EOF
+    {
+    "debug": true,
+    "hosts": ["tcp://0.0.0.0:2375", "unix:///var/run/docker.sock"]
+    }
+
+
+    EOF
+
+    sed -i 's~dockerd -H fd://~dockerd~g' /lib/systemd/system/docker.service
     sudo sed -i 's~StartLimitInterval=60s~StartLimitInterval=60s\nIPForward=yes\n~g' /lib/systemd/system/docker.service
 
 
@@ -42,17 +58,17 @@ Using something debian based like bionic
     sudo systemctl start docker
     docker run --rm -it aarch64/hello-world
 
-### Devel Pkgs
+## Devel Pkgs
 
     sudo apt-get -y update && sudo apt-get -y install build-essential devscripts fakeroot debhelper dpkg-dev automake autotools-dev autoconf libtool perl libperl-dev systemtap-sdt-dev libssl-dev python-dev python3-dev m4 bison flex docbook-dsssl docbook-xml docbook-xsl docbook opensp xsltproc gettext unzip wget libguestfs-tools virtualenvwrapper tox python3-virtualenv openjdk-8-jre-headless openjdk-8-jdk-headless pkg-config python-logilab-common python-unittest2 python-mock zip
 
 
     sudo apt-get -y install python-autopep8 python3-flake8 flake8 python-flake8 isort python-isort python3-isort vim-autopep8 python-wheel python3-wheel python-pip python3-pip tox
 
-### All the pythons
+## All the pythons
 
     sudo add-apt-repository ppa:deadsnakes/ppa
     sudo apt-get update
-    sudo apt-get install python3.5 python3.4
+    sudo apt-get install python3.6 python3.6-venv python3.7 python3.7-venv
 
 
