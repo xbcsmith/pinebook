@@ -23,6 +23,8 @@ Using something debian based like bionic
     sudo apt-get update
     sudo apt-get install golang-go
 
+    mkdir -p ~/go/{src,bin}
+
 ### rust
 
     sudo apt-get install rustc cargo dh-cargo
@@ -50,20 +52,21 @@ Using something debian based like bionic
     sudo sed -i 's~StartLimitInterval=60s~StartLimitInterval=60s\nIPForward=yes\n~g' /lib/systemd/system/docker.service
 
 
-    #adduser $USER
+    # adduser $USER
     sudo groupadd docker
     sudo usermod -aG docker $USER
 
+    # sudo systemctl daemon-reload
     sudo systemctl enable docker
     sudo systemctl start docker
     docker run --rm -it aarch64/hello-world
 
 ## Devel Pkgs
 
-    sudo apt-get -y update && sudo apt-get -y install build-essential devscripts fakeroot debhelper dpkg-dev automake autotools-dev autoconf libtool perl libperl-dev systemtap-sdt-dev libssl-dev python-dev python3-dev m4 bison flex docbook-dsssl docbook-xml docbook-xsl docbook opensp xsltproc gettext unzip wget libguestfs-tools virtualenvwrapper tox python3-virtualenv openjdk-8-jre-headless openjdk-8-jdk-headless pkg-config python-logilab-common python-unittest2 python-mock zip
+    sudo apt-get -y update && sudo apt-get -y install build-essential devscripts fakeroot debhelper dpkg-dev automake autotools-dev autoconf libtool perl libperl-dev systemtap-sdt-dev libssl-dev clang make cmake m4 bison flex docbook-dsssl docbook-xml docbook-xsl docbook opensp xsltproc gettext unzip wget libguestfs-tools  openjdk-8-jre-headless openjdk-8-jdk-headless pkg-config zip
 
 
-    sudo apt-get -y install python-autopep8 python3-flake8 flake8 python-flake8 isort python-isort python3-isort vim-autopep8 python-wheel python3-wheel python-pip python3-pip tox
+    sudo apt-get -y install python-autopep8 python3-flake8 flake8 python-flake8 isort python-isort python3-isort vim-autopep8 python-wheel python3-wheel python-pip python3-pip tox python-dev python3-dev python-logilab-common python-unittest2 python-mock python3-virtualenv virtualenvwrapper tox
 
 ## All the pythons
 
