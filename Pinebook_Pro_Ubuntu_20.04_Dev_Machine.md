@@ -75,7 +75,7 @@ sudo apt install nautilus gnome-tweaks
 ## GO
 
 ```bash
-export GOVERSION=1.14.3
+export GOVERSION=1.14.6
 curl -kLO https://dl.google.com/go/go${GOVERSION}.linux-arm64.tar.gz
 sudo rm -rfv /usr/local/go
 sudo tar -C /usr/local/ -xvzf go${GOVERSION}.linux-arm64.tar.gz
@@ -99,18 +99,8 @@ curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/insta
 
 ## Most people don't need go-critic as it comes with golangci-lint
 ## I probably don't really need it locally either...
-go get -v github.com/go-lintpack/lintpack/...
-go get -v github.com/go-critic/go-critic/...
-## For some reason with 1.14.3 install instructions didn't work
-## So lets do this the hard way
-mkdir -p ~/go/src/github.com/go-critic
-cd ~/go/src/github.com/go-critic
-git clone git@github.com:go-critic/go-critic.git
-cd go-critic/
-make gocritic
-./gocritic check --help
-mv gocritic ~/go/bin/
-cd
+go get -v -u github.com/go-critic/go-critic/cmd/gocritic
+
 ```
 
 ## Rust
