@@ -13,7 +13,11 @@
 - [Virtual Env](#virtual-env)
 - [Nautilus](#nautilus)
 - [VSCodium](#vscodium)
+- [Git Aliases](#git-aliases)
 - [Lint](#lint)
+- [Pre Commit](#pre-commit)
+- [Sound](#sound)
+- [Sleep](#hack-sleep)
 
 ## Editor
 
@@ -219,6 +223,11 @@ pip install --upgrade rfc3987 enum34 PyYAML stevedore jsonschema Jinja2
 pip install --upgrade autopep8 flake8 tox black isort pdbpp
 ```
 
+```bash
+cp /usr/share/virtualenvwrapper/virtualenvwrapper_lazy.sh ~/.virtualenvwrapper_lazy.sh
+echo "source ~/.virtualenvwrapper_lazy.sh" >> .bashrc
+```
+
 ## NPM
 
 ```bash
@@ -247,10 +256,89 @@ mkdir ~/downloads
 
 <https://github.com/VSCodium/vscodium/releases/download/1.45.1/codium_1.45.1-1589539619_arm64.deb>
 
+## Git Aliases
+
+```bash
+git config --global alias.st status
+git config --global alias.last "log -1 HEAD"
+git config --global alias.br "branch -r"
+git config --global alias.co checkout
+git config --global alias.ci commit
+git config --global alias.unstage "reset HEAD --"
+git config --global alias.b branch
+git config --global alias.t "tag --list -n"
+git config --global alias.cb "checkout -b"
+git config --global alias.can "commit --amend --no-edit"
+git config --global alias.lt "describe --tags"
+git config --global alias.pl "pull --rebase"
+```
+
 ## Lint
 
 ```bash
 sudo apt install yamllint shellcheck
 npm install markdownlint-cli
 npm install commitlint
+```
+
+## Pre-Commit
+
+```bash
+workon foo
+pip install pre-commit
+```
+
+## Sound
+
+Open alsamixer from terminal and turn up Headphone and Headphone Mixer
+unmute `Left Headphone Mixer Left DAC` and `Right Headphone Mixer Right DAC`
+
+```bash
+alsamixer
+```
+
+Open a terminal. (The quickest way is the Ctrl-Alt-T shortcut.)
+Type "alsamixer" and press the Enter key.
+You will now see a user interface. In this user interface, you can do the following:
+
+- Select your correct sound card using F6 and select F5 to see recording controls as well
+- Move around with left and right arrow keys.
+- Increase and decrease volume with up and down arrow keys.
+- Increase and decrease volume for left/right channel individually with "Q", "E", "Z", and "C" keys.
+- Mute/Unmute with the "M" key. An "MM" means muted, and "OO" means unmuted. Note that a bar can be 100% full but still be muted, so do check for this.
+- Exit from alsamixer with the Esc key.
+
+```bash
+sudo apt install pulseaudio-module-bluetooth
+sudo apt install acpid
+```
+
+Fix headphone/speaker sound
+
+```bash  
+git clone https://gitlab.manjaro.org/manjaro-arm/packages/community/pinebookpro-audi  o.git
+cd pinebookpro-audio
+cat > install.sh << EOF
+#!/usr/bin/env bash
+export srcdir=$(pwd)
+export pkgdir=""
+  
+source PKGBUILD
+source pinebookpro-audio.install
+  
+package
+post_upgrade
+
+EOF
+
+chod +x install.sh
+sudo ./install.sh
+```
+
+## Hack Sleep
+
+```bash
+sudo sed -i s/"#AllowHibernation=yes"/"AllowHibernation=no"/g /etc/systemd/sleep.conf
+
+sudo sed -i s/"#SuspendState=mem standby freeze"/"SuspendState=mem"/g /etc/systemd/sleep.conf
 ```
